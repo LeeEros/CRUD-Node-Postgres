@@ -12,7 +12,7 @@ const pool = new Pool({
 });
 
 const getUsuarios = (request, response) => {
-    pool.query('SELECT * FROM usuarios ORDER BY id_usuarios', (error, results) => {
+    pool.query('SELECT * FROM usuarios ORDER BY id_usuario', (error, results) => {
         if (error) {
             throw error
         }
@@ -23,7 +23,7 @@ const getUsuarios = (request, response) => {
 const getUsuariosById = (request, response) => {
     const id = (request.params.id)
 
-    pool.query('SELECT * FROM usuarios WHERE id_usuarios = $1', [id],
+    pool.query('SELECT * FROM usuarios WHERE id_usuario = $1', [id],
         (error, results) => {
             if (error) {
                 throw error
@@ -51,15 +51,15 @@ const createUsuario = (request, response) => {
 };
 
 const updateUsuario = (request, response) => {
-    const id_usuarios = parseInt(request.params.id)
+    const id_usuario = parseInt(request.params.id)
     const { nome, email, senha, data_nascimento, data_filiacao } = request.body;
-    console.log(id_usuarios);
+    console.log(id_usuario);
     const DataNascimentoFormatada = moment(data_nascimento, 'DD-MM-YYYY').format('YYYY-MM-DD');
     const DataFiliacaoFormatada = moment(data_filiacao, 'DD-MM-YYYY').format('YYYY-MM-DD');
 
     pool.query(
-        'UPDATE usuarios SET nome = $1, email = $2, senha = $3, data_nascimento = $4, data_filiacao = $5 WHERE id_usuarios = $6',
-        [nome, email, senha, DataNascimentoFormatada, DataFiliacaoFormatada, id_usuarios],
+        'UPDATE usuarios SET nome = $1, email = $2, senha = $3, data_nascimento = $4, data_filiacao = $5 WHERE id_usuario = $6',
+        [nome, email, senha, DataNascimentoFormatada, DataFiliacaoFormatada, id_usuario],
         (error, result) => {
             if (error) {
                 console.error('Database insert error:', error.message);
