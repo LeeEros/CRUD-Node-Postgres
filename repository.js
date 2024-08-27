@@ -50,9 +50,31 @@ const createUsuario = (request, response) => {
     );
 };
 
+const updateUsuario = (request, response) => {
+    const id_usuarios = parseInt(request.params.id)
+    const { nome, email, senha, data_nascimento, data_filiacao } = request.body;
+    console.log(id_usuarios);
+    const DataNascimentoFormatada = moment(data_nascimento, 'DD-MM-YYYY').format('YYYY-MM-DD');
+    const DataFiliacaoFormatada = moment(data_filiacao, 'DD-MM-YYYY').format('YYYY-MM-DD');
+
+    pool.query(
+        'UPDATE usuarios SET nome = $1, email = $2, senha = $3, data_nascimento = $4, data_filiacao = $5 WHERE id_usuarios = $6',
+        [nome, email, senha, DataNascimentoFormatada, DataFiliacaoFormatada, id_usuarios],
+        (error, result) => {
+            if (error) {
+                console.error('Database insert error:', error.message);
+                return response.status(500).json({ error: 'Database insert error', details: error.message });
+            }
+            response.status(200).json({ message: 'Usuário atualizado com sucesso' });
+        }
+    );
+};
+
+
 
 module.exports = {
     getUsuarios,
     getUsuariosById,
-    createUsuario
+    createUsuario,
+    updateUsuario
 };

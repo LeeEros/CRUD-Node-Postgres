@@ -26,3 +26,4 @@ app.listen(port, () => {
 app.get('/usuarios', repository.getUsuarios)
 app.get('/usuarios/:id', repository.getUsuariosById)
 app.post('/usuarios', repository.createUsuario)
+app.put('/usuarios/:id', repository.updateUsuario)
