@@ -1,7 +1,8 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const app = express()
 const repository = require('./repository')
+
+const app = express()
 
 require("dotenv").config();
 
@@ -22,4 +23,6 @@ app.listen(port, () => {
 
 //rotas
 
-app.get('/pessoas', repository.getPessoas)
+app.get('/usuarios', repository.getUsuarios)
+app.get('/usuarios/:id', repository.getUsuariosById)
+app.post('/usuarios', repository.createUsuario)
